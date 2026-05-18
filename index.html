@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>任孟雪 · Portfolio — Editorial Draft</title>
+<style>
+  /* ─────────────────────────────────────────
+     COLOR TOKENS  ←  change here to retheme
+  ───────────────────────────────────────── */
+  :root {
+    --bg:        #ffffff;
+    --bg-alt:    #f9f7f4;      /* warm off-white for alternate sections   */
+    --bg-dark:   #0f0f0f;      /* single dark contrast block              */
+    --orange:    #f97316;      /* primary accent                          */
+    --orange-lt: #fff7ed;      /* light tint for tags / badges            */
+    --text:      #0a0a0a;
+    --muted:     #71717a;
+    --border:    #e4e4e7;
+    --sans: system-ui,-apple-system,'Segoe UI','Helvetica Neue',sans-serif;
+    --mono: 'SF Mono','Fira Code','Cascadia Code',monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+  img { display: block; max-width: 100%; height: auto; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 60px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-size: 16px; font-weight: 700; letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
+  .nav-logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 13px; color: var(--muted); transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    font-size: 13px; font-weight: 600; color: var(--orange);
+    border: 1.5px solid var(--orange); border-radius: 8px;
+    padding: 7px 18px; transition: all .2s;
+  }
+  .nav-cta:hover { background: var(--orange); color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 60px 0 0;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 56px 80px;
+    border-right: 1px solid var(--border);
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--orange); font-weight: 600; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-label::before { content: ''; width: 24px; height: 1.5px; background: var(--orange); }
+  h1.hero-heading {
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 900; line-height: 1.08;
+    letter-spacing: -.04em; margin-bottom: 20px;
+  }
+  h1.hero-heading .underline-orange {
+    position: relative; display: inline-block;
+  }
+  h1.hero-heading .underline-orange::after {
+    content: ''; position: absolute; left: 0; bottom: -4px;
+    width: 100%; height: 4px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--orange) 0%, #fbbf24 50%, var(--orange) 100%);
+    background-size: 200% 100%;
+    animation: shimmerSlide 2s linear infinite;
+  }
+  .hero-sub {
+    font-size: 17px; color: var(--muted); line-height: 1.8;
+    margin-bottom: 40px; max-width: 440px;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+  .hero-actions { display: flex; gap: 12px; margin-bottom: 56px; }
+  .btn-fill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 13px 28px; background: var(--text); color: #fff;
+    border-radius: 10px; font-size: 14px; font-weight: 600;
+    transition: all .2s; border: 1.5px solid var(--text);
+  }
+  .btn-fill:hover { background: var(--orange); border-color: var(--orange); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 13px 28px; border: 1.5px solid var(--border);
+    color: var(--muted); border-radius: 10px; font-size: 14px;
+    transition: all .2s;
+  }
+  .btn-outline:hover { border-color: var(--text); color: var(--text); }
+  .hero-stats { display: flex; gap: 40px; }
+  .hero-stat-num {
+    font-size: 32px; font-weight: 900; letter-spacing: -.04em; color: var(--text);
+    display: block; line-height: 1;
+  }
+  .hero-stat-num span { color: var(--orange); }
+  .hero-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: .04em; text-transform: uppercase; }
+  .hero-right {
+    background: var(--bg-alt);
+    display: flex; flex-direction: column;
+    padding: 80px 56px;
+    gap: 20px;
+  }
+  .hero-right-title { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  /* mini project cards in hero */
+  .hero-proj-list { display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center; }
+  .hero-proj {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px 24px; display: flex; align-items: center; gap: 16px;
+    transition: all .25s; cursor: pointer;
+  }
+  .hero-proj:hover { border-color: var(--orange); transform: translateX(4px); box-shadow: 0 4px 16px rgba(249,115,22,.1); }
+  .hero-proj-icon {
+    width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .icon-orange { background: var(--orange-lt); }
+  .icon-gray   { background: #f3f4f6; }
+  .icon-dark   { background: var(--bg-dark); }
+  .hero-proj-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; letter-spacing: -.01em; }
+  .hero-proj-tag  { font-size: 11px; color: var(--muted); }
+  .hero-proj-arrow { margin-left: auto; color: var(--muted); font-size: 16px; transition: transform .2s; }
+  .hero-proj:hover .hero-proj-arrow { transform: translateX(4px); color: var(--orange); }
+  /* skill cloud in hero */
+  .hero-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hero-skill {
+    font-size: 12px; color: var(--muted); background: var(--bg);
+    border: 1px solid var(--border); border-radius: 100px;
+    padding: 4px 12px; transition: all .2s;
+  }
+  .hero-skill.active { color: var(--orange); border-color: var(--orange); background: var(--orange-lt); font-weight: 600; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s cubic-bezier(.23,1,.32,1), transform .65s cubic-bezier(.23,1,.32,1); }
+  .reveal.in { opacity:1; transform:none; }
+  .d1{transition-delay:.07s} .d2{transition-delay:.14s} .d3{transition-delay:.21s}
+
+  /* ── SECTION ── */
+  .section { max-width: 1200px; margin: 0 auto; padding: 96px 48px; }
+  .section-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: 48px; }
+  .section-num { font-family: var(--mono); font-size: 12px; color: var(--orange); letter-spacing: .06em; }
+  .section-title { font-size: clamp(22px, 2.8vw, 32px); font-weight: 800; letter-spacing: -.03em; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); }
+
+  /* ── CORE STRENGTHS (compact card grid) ── */
+  .hl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .hl-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 22px;
+    transition: border-color .2s, transform .25s cubic-bezier(.23,1,.32,1), box-shadow .2s;
+  }
+  .hl-card:hover { border-color: var(--orange); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(249,115,22,.08); }
+  .hl-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .hl-num { font-family: var(--mono); font-size: 10px; color: var(--orange); font-weight: 700; letter-spacing: .06em; }
+  .hl-label { font-size: 14px; font-weight: 800; letter-spacing: -.02em; }
+  .hl-label-emoji { font-size: 16px; }
+  .hl-text { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+
+  /* ── ALT BG SECTION ── */
+  .section-alt { background: var(--bg-alt); }
+
+  /* ── FEATURED PROJECT ── */
+  .featured-card {
+    border: 1.5px solid var(--border); border-radius: 20px; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  .featured-card:hover { border-color: var(--orange); box-shadow: 0 20px 48px rgba(0,0,0,.08); }
+  .featured-body { padding: 48px; display: flex; flex-direction: column; justify-content: center; }
+  .featured-media {
+    background: #f3f4f6; overflow: hidden;
+    display: flex; align-items: flex-start; justify-content: center;
+  }
+  .featured-media img { width: 100%; height: auto; display: block; }
+  .proj-tag {
+    display: inline-flex; align-items: center;
+    font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    background: var(--orange-lt); color: var(--orange);
+    border-radius: 6px; padding: 4px 10px; margin-bottom: 16px; width: fit-content;
+  }
+  .proj-name { font-size: 24px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 12px; }
+  .proj-desc { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 24px; }
+  .proj-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 28px; }
+  .chip {
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    background: #f4f4f5; border: 1px solid var(--border); border-radius: 5px; padding: 3px 8px;
+  }
+  .proj-links { display: flex; gap: 16px; align-items: center; }
+  .link-primary { font-size: 13px; font-weight: 700; color: var(--orange); display: flex; align-items: center; gap: 5px; transition: gap .2s; }
+  .link-primary:hover { gap: 8px; }
+  .link-secondary { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 5px; transition: color .2s; }
+  .link-secondary:hover { color: var(--text); }
+
+  /* ── PROJECT GRID ── */
+  .proj-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .proj-card {
+    border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden;
+    transition: border-color .3s, transform .3s cubic-bezier(.23,1,.32,1), box-shadow .3s;
+    display: flex; flex-direction: column;
+  }
+  .proj-card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.08); }
+  .proj-card-img { overflow: hidden; background: #f3f4f6; }
+  .proj-card-img img { width: 100%; height: auto; object-fit: cover; object-position: top; transition: transform .4s cubic-bezier(.23,1,.32,1); }
+  .proj-card:hover .proj-card-img img { transform: scale(1.04); }
+  .proj-card-img-placeholder { padding: 40px; display: flex; align-items: center; justify-content: center; font-size: 48px; min-height: 180px; }
+  .proj-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .proj-card-tag { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+  .proj-card-name { font-size: 18px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+  .proj-card-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; flex: 1; }
+  .proj-card-stack { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  /* ── PROTOTYPE SECTION ── */
+  .proto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .proto-card {
+    border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  .proto-card:hover { border-color: var(--orange); box-shadow: 0 12px 32px rgba(0,0,0,.07); }
+  .proto-frame {
+    position: relative; height: 320px; overflow: hidden;
+    background: #f3f4f6; border-bottom: 1px solid var(--border);
+  }
+  .proto-frame iframe {
+    width: 200%; height: 200%; border: none;
+    transform: scale(.5); transform-origin: top left;
+    pointer-events: none;
+  }
+  .proto-frame-fade {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 55%, rgba(249,247,244,.9) 100%);
+  }
+  .proto-body { padding: 24px 28px; }
+  .proto-tag { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+  .proto-name { font-size: 18px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 6px; }
+  .proto-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+  /* wide proto card — spans both columns, side-by-side layout */
+  .proto-card-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.4fr 1fr; }
+  .proto-card-wide .proto-frame {
+    height: 100%; min-height: 300px;
+    border-bottom: none; border-right: 1px solid var(--border); border-radius: 0;
+  }
+  .proto-card-wide .proto-body { display: flex; flex-direction: column; justify-content: center; padding: 36px 36px; }
+  .proto-card-wide .proto-name { font-size: 20px; }
+  .proto-card-wide .proto-desc { font-size: 14px; }
+
+  /* ── DARK BLOCK — CLAUDE.md ── */
+  .dark-block { background: var(--bg-dark); }
+  .dark-block .section-num { color: #f97316; }
+  .dark-block .section-title { color: #fff; }
+  .dark-block .section-line { background: rgba(255,255,255,.08); }
+  .claude-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .claude-points { display: flex; flex-direction: column; gap: 28px; }
+  .claude-pt { display: flex; gap: 14px; }
+  .claude-pt-num { font-family: var(--mono); font-size: 11px; color: var(--orange); width: 24px; flex-shrink: 0; padding-top: 3px; }
+  .claude-pt-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+  .claude-pt-desc { font-size: 13px; color: #6b7280; line-height: 1.75; }
+  /* terminal */
+  .terminal {
+    background: #0a0a0a; border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px; overflow: hidden;
+  }
+  .tbar { background: rgba(255,255,255,.04); padding: 12px 16px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .tdot { width: 10px; height: 10px; border-radius: 50%; }
+  .tr{background:#ff5f57} .ty{background:#febc2e} .tg{background:#28c840}
+  .tfile { font-family: var(--mono); font-size: 11px; color: #4b5563; margin-left: auto; }
+  .tbody { padding: 22px 26px; font-family: var(--mono); font-size: 12px; line-height: 2; }
+  .tl { display: block; opacity: 0; }
+  .tl.show { animation: tlin .3s cubic-bezier(.23,1,.32,1) forwards; }
+  @keyframes tlin { from{opacity:0;transform:translateX(-5px)} to{opacity:1;transform:none} }
+  .tc{color:#374151} .tk{color:#f472b6} .tv{color:#86efac} .tw{color:#818cf8} .ta{color:#67e8f9}
+  .tcur { display:inline-block; width:7px; height:1.05em; background:var(--orange); vertical-align:text-bottom; animation:cblink .8s step-end infinite; }
+  @keyframes cblink{50%{opacity:0}}
+
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .skill-col { background: var(--bg); padding: 28px 24px; }
+  .skill-col-title { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
+  .skill-pills { display: flex; flex-direction: column; gap: 8px; }
+  .skill-pill { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .skill-pill::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+  .skill-pill.hot { color: var(--text); font-weight: 600; }
+  .skill-pill.hot::before { background: var(--orange); }
+
+  /* ── LENOVO ENTERPRISE SHOWCASE ── */
+  .lenovo-featured-wrap { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+  .lenovo-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  .lenovo-card {
+    background: linear-gradient(155deg, #0c1628 0%, #060c16 100%);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px; overflow: hidden;
+    position: relative;
+    transition: border-color .4s, box-shadow .4s, transform .4s cubic-bezier(.23,1,.32,1);
+    cursor: default;
+  }
+  .lenovo-card:hover {
+    border-color: rgba(251,191,36,.4);
+    box-shadow: 0 0 0 1px rgba(251,191,36,.12), 0 24px 56px rgba(6,12,22,.7), 0 0 70px rgba(251,191,36,.08);
+    transform: translateY(-5px);
+  }
+  /* ambient glow top edge */
+  .lenovo-card::before {
+    content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(251,191,36,.4), transparent);
+    opacity: 0; transition: opacity .4s;
+  }
+  .lenovo-card:hover::before { opacity: 1; }
+
+  /* scan line on hover */
+  .lenovo-card::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(251,191,36,.5), transparent);
+    top: 0; opacity: 0;
+    transition: opacity .3s;
+    animation: none;
+  }
+  .lenovo-card:hover::after { opacity: 1; animation: scanDown 2s linear infinite; }
+  @keyframes scanDown { from{top:0%} to{top:100%} }
+
+  .lenovo-img-wrap {
+    position: relative; overflow: hidden;
+    padding: 20px 20px 0;
+  }
+  .lenovo-screen {
+    border-radius: 8px 8px 0 0; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.5), 0 8px 32px rgba(0,0,0,.6);
+    position: relative;
+    transition: box-shadow .4s;
+  }
+  .lenovo-card:hover .lenovo-screen {
+    box-shadow: 0 0 0 1px rgba(251,191,36,.15), 0 8px 48px rgba(251,191,36,.08), 0 16px 64px rgba(0,0,0,.7);
+  }
+  .lenovo-screen img {
+    width: 100%; height: auto; display: block;
+    filter: brightness(.95);
+    transition: filter .4s, transform .5s cubic-bezier(.23,1,.32,1);
+  }
+  .lenovo-card:hover .lenovo-screen img { filter: brightness(1.05); transform: scale(1.02); }
+
+  /* subtle vignette overlay on image */
+  .lenovo-screen::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,.3) 100%);
+    pointer-events: none;
+  }
+
+  .lenovo-body { padding: 20px 24px 28px; }
+  .lenovo-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .lenovo-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #fbbf24; background: rgba(251,191,36,.08);
+    border: 1px solid rgba(251,191,36,.2); border-radius: 5px; padding: 3px 9px;
+  }
+  .lenovo-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.15); }
+  .lenovo-factory { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.25); letter-spacing: .06em; }
+  .lenovo-name { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -.02em; margin-bottom: 6px; }
+  .lenovo-desc { font-size: 12.5px; color: rgba(255,255,255,.4); line-height: 1.7; margin-bottom: 14px; }
+  .lenovo-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .lenovo-chip {
+    font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.3);
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+    border-radius: 4px; padding: 2px 7px;
+  }
+  /* featured lenovo card — image top / body bottom, full image display */
+  .lenovo-card-featured .lenovo-img-wrap { padding: 20px 20px 0; }
+  .lenovo-card-featured .lenovo-screen img { width: 100%; height: auto; object-fit: unset; }
+  .lenovo-card-featured .lenovo-name { font-size: 20px; }
+  .lenovo-card-featured .lenovo-desc { font-size: 13px; }
+  /* dashboard-1 超宽全景图：自然比例 */
+  .lenovo-card-dash1 .lenovo-screen img { width: 100%; height: auto; object-fit: unset; }
+  /* dashboard-2 接近 16:9：固定高度展示顶部 */
+  .lenovo-card-dash2 .lenovo-img-wrap { padding: 20px 20px 0; }
+  .lenovo-card-dash2 .lenovo-screen { overflow: hidden; max-height: 380px; }
+  .lenovo-card-dash2 .lenovo-screen img { width: 100%; height: auto; display: block; object-fit: unset; }
+  /* featured tag badge */
+  .lenovo-tag-star {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #fbbf24; background: rgba(251,191,36,.12);
+    border: 1px solid rgba(251,191,36,.3); border-radius: 5px; padding: 3px 9px;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-row {
+    display: grid; grid-template-columns: 180px 1fr;
+    gap: 40px; padding: 36px 0; border-top: 1px solid var(--border);
+  }
+  .exp-date { font-size: 12px; color: var(--muted); font-family: var(--mono); padding-top: 2px; }
+  .exp-company { font-size: 19px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 4px; }
+  .exp-role { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+  .exp-desc { font-size: 14px; color: var(--muted); line-height: 1.8; }
+
+  /* ── CONTACT ── */
+  .contact-block {
+    background: var(--orange);
+    padding: 100px 48px; text-align: center;
+  }
+  .contact-block-label { font-size: 11px; color: rgba(255,255,255,.7); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; }
+  .contact-block-title { font-size: clamp(32px, 5vw, 56px); font-weight: 900; color: #fff; letter-spacing: -.04em; margin-bottom: 12px; line-height: 1.1; }
+  .contact-block-sub { font-size: 17px; color: rgba(255,255,255,.75); margin-bottom: 40px; }
+  .contact-email-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 15px; font-weight: 700; color: var(--orange);
+    background: #fff; border-radius: 12px; padding: 16px 36px;
+    transition: all .2s;
+  }
+  .contact-email-btn:hover { background: #0a0a0a; color: #fff; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--muted);
+    max-width: 100%;
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--muted); transition: color .2s; }
+  .footer-links a:hover { color: var(--orange); }
+
+  /* ─────────────────────────────────────────
+     ENHANCED EFFECTS
+  ───────────────────────────────────────── */
+
+  /* CSS Houdini property for spinning border */
+  @property --border-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+  /* scroll progress bar */
+  #scroll-progress {
+    position: fixed; top: 60px; left: 0; height: 2px; z-index: 300;
+    background: linear-gradient(90deg, var(--orange), #fbbf24, var(--orange));
+    background-size: 200% 100%;
+    width: 0%; transition: width .06s linear;
+    border-radius: 0 2px 2px 0;
+    animation: shimmerSlide 1.5s linear infinite;
+  }
+
+  /* cursor glow */
+  #cursor-glow {
+    position: fixed; pointer-events: none; z-index: 9999;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(249,115,22,.065) 0%, transparent 65%);
+    transform: translate(-50%, -50%);
+    opacity: 0; transition: opacity .6s;
+    top: -9999px; left: -9999px;
+  }
+
+  /* hero blobs */
+  .hero-left { position: relative; overflow: hidden; }
+  .hero-blob {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    filter: blur(80px); z-index: 0;
+  }
+  .hero-blob-1 {
+    width: 520px; height: 520px;
+    background: rgba(249,115,22,.12);
+    top: -160px; right: -160px;
+    animation: blobFloat 14s ease-in-out infinite;
+  }
+  .hero-blob-2 {
+    width: 340px; height: 340px;
+    background: rgba(251,191,36,.09);
+    bottom: 0; left: -80px;
+    animation: blobFloat 18s ease-in-out infinite reverse;
+    animation-delay: -6s;
+  }
+  .hero-label, h1.hero-heading, .hero-sub, .hero-actions, .hero-stats {
+    position: relative; z-index: 1;
+  }
+  @keyframes blobFloat {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(32px,-28px) scale(1.07); }
+    66% { transform: translate(-22px,20px) scale(0.93); }
+  }
+
+  /* shimmer animation */
+  @keyframes shimmerSlide {
+    0%   { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  /* hero-label line entrance */
+  .hero-label::before {
+    animation: lineGrow .8s cubic-bezier(.23,1,.32,1) .4s both;
+  }
+  @keyframes lineGrow { from { width: 0; } to { width: 24px; } }
+
+  /* hero proj list staggered entrance */
+  .hero-proj {
+    opacity: 0;
+    transform: translateX(18px);
+    animation: heroSlideIn .65s cubic-bezier(.23,1,.32,1) forwards;
+  }
+  .hero-proj:nth-child(1) { animation-delay: .3s; }
+  .hero-proj:nth-child(2) { animation-delay: .46s; }
+  .hero-proj:nth-child(3) { animation-delay: .62s; }
+  @keyframes heroSlideIn { to { opacity: 1; transform: none; } }
+
+  /* featured card hover glow (keeping original overflow:hidden intact) */
+  .featured-card:hover { box-shadow: 0 20px 48px rgba(0,0,0,.08), 0 0 0 2px var(--orange); }
+
+  /* nav link underline hover */
+  .nav-links a { position: relative; }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0;
+    width: 0; height: 1.5px; background: var(--orange); border-radius: 1px;
+    transition: width .25s cubic-bezier(.23,1,.32,1);
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* skill col hover tint */
+  .skill-col { transition: background .25s; }
+  .skill-col:hover { background: var(--orange-lt); }
+  .skill-col:hover .skill-col-title { color: var(--text); }
+
+  /* contact email btn inner glow */
+  .contact-email-btn:hover {
+    box-shadow: 0 0 40px rgba(255,255,255,.25), 0 8px 24px rgba(0,0,0,.15);
+  }
+
+  /* hero stats number pop */
+  .hero-stat-num { transition: color .2s; }
+  .hero-stat-num:hover { color: var(--orange) !important; }
+
+  /* proto card iframe mask shimmer on hover */
+  .proto-card:hover .proto-frame-fade {
+    background: linear-gradient(to bottom, transparent 50%, rgba(249,247,244,.95) 100%);
+  }
+</style>
+</head>
+<body>
+<div id="cursor-glow"></div>
+<div id="scroll-progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-dot"></div>
+    任孟雪
+  </div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">联系我</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-label">AI Agent Developer · Frontend Engineer</div>
+    <h1 class="hero-heading">
+      5 年前端工程<br>
+      延伸到<span class="underline-orange">AI 落地</span>
+    </h1>
+    <p class="hero-sub">
+      独立开发 <strong>2 款生产级 AI 产品</strong>，从 0 到 1 全链路交付；<br>
+      主导联想<strong>制造后台报表</strong>与<strong>嵌入式 AI Chatbot SDK</strong> 落地。<br>
+      <span style="color:var(--muted);font-size:13px;">CLAUDE.md 规范驱动 AI 协作，LangGraph · RAG 全链路落地。</span>
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-fill">查看项目 →</a>
+      <a href="#contact" class="btn-outline">联系我</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num" data-count="5">0</span>
+        <div class="hero-stat-label">Years Exp.</div>
+      </div>
+      <div>
+        <span class="hero-stat-num" data-count="2">0</span>
+        <div class="hero-stat-label">AI Projects</div>
+      </div>
+      <div>
+        <span class="hero-stat-num" data-count="3">0</span>
+        <div class="hero-stat-label">Global Dashboards</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-right-title">精选项目</div>
+    <div class="hero-proj-list">
+      <a class="hero-proj" href="https://job-intel-agent.vercel.app" target="_blank">
+        <div class="hero-proj-icon icon-orange">🤖</div>
+        <div>
+          <div class="hero-proj-name">Job Intel Agent</div>
+          <div class="hero-proj-tag">LangGraph · Multi-step Agent · SSE</div>
+        </div>
+        <div class="hero-proj-arrow">→</div>
+      </a>
+      <a class="hero-proj" href="https://offer-copilots.vercel.app" target="_blank">
+        <div class="hero-proj-icon icon-gray">🔍</div>
+        <div>
+          <div class="hero-proj-name">DevDoc RAG</div>
+          <div class="hero-proj-tag">混合检索 · Cohere Rerank · Celery SSE</div>
+        </div>
+        <div class="hero-proj-arrow">→</div>
+      </a>
+      <div class="hero-proj">
+        <div class="hero-proj-icon icon-dark" style="color:#fbbf24;">📊</div>
+        <div>
+          <div class="hero-proj-name">联想全球工厂大屏</div>
+          <div class="hero-proj-tag">ECharts · Vue3 · 3 Global Factories</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="hero-right-title" style="margin-bottom:12px;">核心技术</div>
+      <div class="hero-skills">
+        <span class="hero-skill active">LangGraph</span>
+        <span class="hero-skill active">RAG</span>
+        <span class="hero-skill active">React / Next.js</span>
+        <span class="hero-skill active">Vue 3</span>
+        <span class="hero-skill">FastAPI</span>
+        <span class="hero-skill">pgvector</span>
+        <span class="hero-skill">TypeScript</span>
+        <span class="hero-skill">ECharts</span>
+        <span class="hero-skill">SSE</span>
+        <span class="hero-skill">Tailwind</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<div class="section" id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">精选项目</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- Featured: Job Intel Agent -->
+  <div class="featured-card reveal">
+    <div class="featured-body">
+      <div class="proj-tag">★ AI Agent · LangGraph</div>
+      <div class="proj-name">Job Intel Agent</div>
+      <p class="proj-desc">AI 驱动的求职情报助手。粘贴 JD 链接或上传简历（PDF/DOCX），LangGraph <strong style="color:var(--text)">5 节点 2 中断 StateGraph</strong> 流水线对 6 个调研方向并行分析，生成职位解读、匹配度评估、公司画像、面试题（附答题思路）、薪资区间、备战建议结构化报告。<strong style="color:var(--text)">checkpoint 断点恢复 + interrupt() Human-in-the-Loop</strong>，两处审核节点供用户干预；Redis Pub/Sub + SSE 零轮询实时推送；支持 Vision 多模态 JD 截图输入。</p>
+      <div class="proj-stack">
+        <span class="chip">LangGraph</span><span class="chip">StateGraph</span>
+        <span class="chip">Human-in-the-Loop</span>
+        <span class="chip">FastAPI</span><span class="chip">Next.js</span>
+        <span class="chip">pgvector</span><span class="chip">SSE</span>
+        <span class="chip">Celery + Redis</span>
+        <span class="chip">Pydantic</span><span class="chip">Vision</span>
+        <span class="chip">CLAUDE.md</span>
+      </div>
+      <div class="proj-links">
+        <a class="link-primary" href="https://job-intel-agent.vercel.app" target="_blank">↗ 查看 Demo</a>
+        <a class="link-secondary" href="../job-intel-agent/html/ui-prototype.html" target="_blank">⬡ UI 原型</a>
+      </div>
+    </div>
+    <div class="featured-media">
+      <img src="assets/demo.gif" alt="Job Intel Agent 演示" loading="lazy">
+    </div>
+  </div>
+
+  <!-- DevDoc RAG -->
+  <div class="proj-grid" style="grid-template-columns:1fr;margin-top:20px;">
+    <div class="featured-card reveal" style="grid-template-columns:1fr 1.1fr;">
+      <div class="featured-body">
+        <div class="proj-tag">全栈独立开发 · RAG Pipeline</div>
+        <div class="proj-name">DevDoc RAG</div>
+        <p class="proj-desc" style="font-size:13px;">
+          面向开发者的技术文档问答系统。粘贴 URL 或上传 PDF，Firecrawl 异步爬取 → 语义 Chunking（H1–H4 路径保留）→ pgvector 向量 + 全文双路检索 → Cohere rerank-v3.5 语义重排 → SSE 流式回答 + 强制引用校验（无来源直接拒绝入库）。
+        </p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+          <div style="font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;">
+            <span style="color:var(--orange);font-weight:700;flex-shrink:0;">①</span>
+            <span>混合检索：pgvector 余弦 + ts_rank_cd 全文双路召回，Cohere rerank-v3.5 重排过滤</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;">
+            <span style="color:var(--orange);font-weight:700;flex-shrink:0;">②</span>
+            <span>查询改写 + 滑动窗口上下文管理，Celery 异步摘要压缩（20 条触发）</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;">
+            <span style="color:var(--orange);font-weight:700;flex-shrink:0;">③</span>
+            <span>JWT 全链路认证 + Alembic 迁移 + Docker Compose 本地编排 + Vercel / Railway 生产部署</span>
+          </div>
+        </div>
+        <div class="proj-stack">
+          <span class="chip">pgvector</span><span class="chip">Cohere Rerank</span>
+          <span class="chip">FastAPI</span><span class="chip">Celery + Redis</span>
+          <span class="chip">Next.js</span><span class="chip">shadcn/ui</span>
+          <span class="chip">Firecrawl</span><span class="chip">SSE</span>
+          <span class="chip">Docker Compose</span>
+          <span class="chip">Vercel</span><span class="chip">Railway</span>
+        </div>
+        <div class="proj-links" style="margin-top:20px;">
+          <a class="link-primary" href="https://offer-copilots.vercel.app" target="_blank">↗ 查看 Demo</a>
+        </div>
+      </div>
+      <!-- 图片占位区，待截图 -->
+      <div class="featured-media" style="flex-direction:column;gap:0;background:linear-gradient(135deg,#fff7ed 0%,#f3f4f6 100%);">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;padding:32px;">
+          <div style="font-size:52px;">🔍</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);letter-spacing:-.02em;">DevDoc RAG</div>
+          <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.7;max-width:180px;">演示截图<br>即将补充</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:4px;">
+            <span style="font-size:10px;color:var(--orange);border:1px solid var(--orange);border-radius:4px;padding:2px 7px;">Hybrid Retrieval</span>
+            <span style="font-size:10px;color:var(--orange);border:1px solid var(--orange);border-radius:4px;padding:2px 7px;">Citation Guard</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PROTOTYPES -->
+<div class="section-alt">
+<div class="section">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">设计过程 · 原型</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="proto-grid">
+    <div class="proto-card reveal d1">
+      <div class="proto-frame">
+        <iframe src="../job-intel-agent/html/ui-prototype.html" sandbox="allow-same-origin allow-scripts" loading="lazy" title="UI 原型"></iframe>
+        <div class="proto-frame-fade"></div>
+      </div>
+      <div class="proto-body">
+        <div class="proto-tag">UI Prototype · Job Intel Agent</div>
+        <div class="proto-name">交互原型设计</div>
+        <p class="proto-desc">7 个完整应用状态：登录 → JD 输入 → 解析 → 确认 → 调研中 → 报告完成。</p>
+        <a class="link-primary" href="../job-intel-agent/html/ui-prototype.html" target="_blank">↗ 全屏查看</a>
+      </div>
+    </div>
+    <div class="proto-card reveal d2">
+      <div class="proto-frame">
+        <iframe src="../job-intel-agent/html/claude-workflow.html" sandbox="allow-same-origin allow-scripts" loading="lazy" title="CLAUDE.md 工作流"></iframe>
+        <div class="proto-frame-fade"></div>
+      </div>
+      <div class="proto-body">
+        <div class="proto-tag">CLAUDE.md · Workflow</div>
+        <div class="proto-name">AI 协作执行指南</div>
+        <p class="proto-desc">为项目编写的 Claude Code 规范可视化——Skill 路由、分级约束、架构规则全览。</p>
+        <a class="link-primary" href="../job-intel-agent/html/claude-workflow.html" target="_blank">↗ 全屏查看</a>
+      </div>
+    </div>
+    <!-- jd-input-mode-draft — 全宽左右分栏 -->
+    <div class="proto-card proto-card-wide reveal d3">
+      <div class="proto-frame">
+        <iframe src="../job-intel-agent/html/jd-input-mode-draft.html" sandbox="allow-same-origin allow-scripts" loading="lazy" title="JD 输入模式草稿"></iframe>
+        <div class="proto-frame-fade"></div>
+      </div>
+      <div class="proto-body">
+        <div class="proto-tag">Claude CLI · 设计草稿</div>
+        <div class="proto-name">JD 输入模式草稿</div>
+        <p class="proto-desc">与 Claude Code CLI 多轮协作迭代的界面草稿——Apple 风格选项卡组件、多模态 JD 输入方式（URL / 文本 / 截图）、交互状态设计过程完整记录。体现了 AI 辅助界面设计的真实工作流。</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a class="link-primary" href="../job-intel-agent/html/jd-input-mode-draft.html" target="_blank">↗ 全屏查看</a>
+          <span class="chip" style="align-self:center;">Claude Code</span>
+          <span class="chip" style="align-self:center;">设计迭代</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- LENOVO ENTERPRISE SHOWCASE -->
+<div class="section">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">企业项目 · 联想智能制造</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="lenovo-featured-wrap">
+
+    <!-- ① Budapest — 全宽主推 -->
+    <div class="lenovo-card lenovo-card-featured reveal">
+      <div class="lenovo-img-wrap">
+        <div class="lenovo-screen">
+          <img src="assets/lenovo-budapest.png" alt="联想布达佩斯工厂运营大屏" loading="lazy">
+        </div>
+      </div>
+      <div class="lenovo-body">
+        <div class="lenovo-meta">
+          <span class="lenovo-tag-star">★ 全球工厂大屏</span>
+          <span class="lenovo-dot"></span>
+          <span class="lenovo-factory">Budapest · Tianjin · Shenzhen</span>
+        </div>
+        <div class="lenovo-name">联想全球工厂运营大屏</div>
+        <p class="lenovo-desc">布达佩斯 / 天津 / 深圳三大工厂全景可视化——产品产量、FPY 良品率、安全管理、ESG 碳排放 20+ 核心指标一屏掌控，支持厂区下钻与大屏自动轮播。从 0 到 1 独立研发落地。</p>
+        <div class="lenovo-chips">
+          <span class="lenovo-chip">Vue 3</span>
+          <span class="lenovo-chip">ECharts 5</span>
+          <span class="lenovo-chip">TypeScript</span>
+          <span class="lenovo-chip">Vite</span>
+          <span class="lenovo-chip">WindiCSS</span>
+          <span class="lenovo-chip">Pinia</span>
+          <span class="lenovo-chip">Less</span>
+          <span class="lenovo-chip">pnpm Monorepo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 全景生产运营看板 -->
+    <div class="lenovo-card lenovo-card-dash1 reveal d1">
+      <div class="lenovo-img-wrap">
+        <div class="lenovo-screen">
+          <img src="assets/lenovo-dashboard-1.png" alt="联想生产运营指标看板" loading="lazy">
+        </div>
+      </div>
+      <div class="lenovo-body">
+        <div class="lenovo-meta">
+          <span class="lenovo-tag">生产运营 · KPI 看板</span>
+          <span class="lenovo-dot"></span>
+          <span class="lenovo-factory">Smart Manufacturing</span>
+        </div>
+        <div class="lenovo-name">生产运营指标看板</div>
+        <p class="lenovo-desc">FPY 良品率趋势、月度产量目标 vs 实际对比、MCR 与 ATP-to-SHIP 全链路追踪，实时驱动生产决策。</p>
+        <div class="lenovo-chips">
+          <span class="lenovo-chip">Vue 3</span>
+          <span class="lenovo-chip">ECharts 5</span>
+          <span class="lenovo-chip">Pinia</span>
+          <span class="lenovo-chip">Less</span>
+          <span class="lenovo-chip">Axios</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CLAUDE.md — DARK BLOCK -->
+<div class="dark-block">
+<div class="section">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">CLAUDE.md · AI 协作规范</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="claude-grid">
+    <div class="reveal">
+      <p style="font-size:15px;color:#9ca3af;line-height:1.85;margin-bottom:32px;">
+        我为每个项目编写精确的 CLAUDE.md 工程规范，将架构约束和 Skill 路由表内嵌到 AI 工作链路——让 Claude Code 真正理解项目结构，而不只是执行自然语言指令。
+      </p>
+      <div class="claude-points">
+        <div class="claude-pt"><span class="claude-pt-num">01</span><div><div class="claude-pt-title">架构约束层</div><div class="claude-pt-desc">LLM 调用只在 services/ 层；实时状态用 SSE + Redis；DB 变更走 Alembic；禁止硬编码密钥。</div></div></div>
+        <div class="claude-pt"><span class="claude-pt-num">02</span><div><div class="claude-pt-title">Skill 路由表</div><div class="claude-pt-desc">新功能 → writing-plans；Bug → systematic-debugging；并行任务 → subagent-dev；前端验证 → gstack /browse。</div></div></div>
+        <div class="claude-pt"><span class="claude-pt-num">03</span><div><div class="claude-pt-title">安全开发规范</div><div class="claude-pt-desc">切分支前强制 git status 检查；commit 等用户确认「1」；删除资源前说明影响范围。</div></div></div>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <div class="terminal" id="terminal-block">
+        <div class="tbar">
+          <span class="tdot tr"></span><span class="tdot ty"></span><span class="tdot tg"></span>
+          <span class="tfile">CLAUDE.md · job-intel-agent</span>
+        </div>
+        <div class="tbody" id="term-body">
+          <span class="tl tc"># 全局约束（始终生效，任何情况不可跳过）</span>
+          <span class="tl"> </span>
+          <span class="tl"><span class="tk">LLM调用</span>   → <span class="tv">services/ 层专属</span></span>
+          <span class="tl"><span class="tk">实时状态</span>  → <span class="tv">SSE + Redis Pub/Sub</span></span>
+          <span class="tl"><span class="tk">DB变更</span>    → <span class="tv">Alembic 迁移必走</span></span>
+          <span class="tl"><span class="tk">commit前</span>  → <span class="tv">等待用户回复「1」</span></span>
+          <span class="tl"> </span>
+          <span class="tl tc"># Skill 路由表</span>
+          <span class="tl"><span class="tw">新功能</span>    → <span class="ta">writing-plans</span></span>
+          <span class="tl"><span class="tw">并行任务</span>  → <span class="ta">subagent-dev</span></span>
+          <span class="tl"><span class="tw">Bug修复</span>   → <span class="ta">systematic-debugging</span></span>
+          <span class="tl"> </span>
+          <span class="tl tc"># 技术栈</span>
+          <span class="tl"><span class="tv">FastAPI · LangGraph · Next.js</span></span>
+          <span class="tl"><span class="tv">pgvector · Redis · Celery</span></span>
+          <span class="tl"><span class="tcur"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SKILLS -->
+<div class="section" id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">技术能力</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-col">
+      <div class="skill-col-title">AI / Agent</div>
+      <div class="skill-pills">
+        <span class="skill-pill hot">LangGraph</span>
+        <span class="skill-pill hot">RAG 系统</span>
+        <span class="skill-pill hot">LLM 集成</span>
+        <span class="skill-pill">pgvector</span>
+        <span class="skill-pill">SSE 流式</span>
+        <span class="skill-pill">Human-in-Loop</span>
+        <span class="skill-pill">CLAUDE.md</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Frontend</div>
+      <div class="skill-pills">
+        <span class="skill-pill hot">React 18 / Next.js</span>
+        <span class="skill-pill hot">Vue 3 全家桶</span>
+        <span class="skill-pill hot">TypeScript</span>
+        <span class="skill-pill">Tailwind CSS</span>
+        <span class="skill-pill">ECharts 大屏</span>
+        <span class="skill-pill">Ant Design</span>
+        <span class="skill-pill">shadcn/ui</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Backend</div>
+      <div class="skill-pills">
+        <span class="skill-pill">FastAPI</span>
+        <span class="skill-pill">Celery + Redis</span>
+        <span class="skill-pill">PostgreSQL</span>
+        <span class="skill-pill">Alembic ORM</span>
+        <span class="skill-pill">Node.js</span>
+        <span class="skill-pill">RESTful API</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Engineering</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Vercel</span>
+        <span class="skill-pill">Docker Compose</span>
+        <span class="skill-pill">Vite / Webpack</span>
+        <span class="skill-pill">i18n 国际化</span>
+        <span class="skill-pill">pnpm / uv</span>
+        <span class="skill-pill">pytest</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="section-alt">
+<div class="section" id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">工作经历</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list">
+    <div class="exp-row reveal">
+      <div class="exp-date">2024/02 — 2026/03</div>
+      <div>
+        <div class="exp-company">联想（北京）</div>
+        <div class="exp-role">前端工程师 · 外包驻场（江西仲博敬才）</div>
+        <ul class="exp-desc" style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+          <li>主导制造数据后台管理系统（mct-admin-pc）多模块报表研发：工单状态、每日投产/发货、SMT / 工艺段在线概况、时区适配、数据下载，持续迭代支撑生产决策。</li>
+          <li>核心开发嵌入式 AI Chatbot SDK（mct-robbie），接入 AI Force Agent，实现 SSE 流式渲染、统一 text / table / chart / insight 消息组件，支持多站点自然语言查数。</li>
+          <li>参与中控大屏与 AI Coach 对话系统建设，完成语音交互、流式消息消费、指标看板及复杂报表开发。</li>
+          <li>负责前端公共能力优化：国际化（i18n）、权限传参、会话管理、请求稳定性与交互体验修复。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-row reveal">
+      <div class="exp-date">2021/03 — 2023/11</div>
+      <div>
+        <div class="exp-company">易显科技有限公司</div>
+        <div class="exp-role">Frontend Engineer</div>
+        <ul class="exp-desc" style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+          <li>根据 UI 设计稿完成页面还原，结合 rem/vw 方案实现移动端等比缩放与多尺寸适配。</li>
+          <li>封装 jsBridge 通信模块，统一 App 内嵌 H5 与原生端交互协议，提升调用稳定性与扩展性。</li>
+          <li>基于 Element UI 封装自适应表单、表格等通用组件，沉淀公共能力并提升开发效率。</li>
+          <li>作为计时平台开发主力，负责核心模块开发及监管平台接口对接，保障业务流程稳定运行。</li>
+          <li>负责招、约、训、模、考等核心场景的约课流程开发，支撑驾校学员预约业务闭环。</li>
+          <li>参与项目维护、样式优化、本地缓存、友盟埋点、Code Review 及文档编写，提升代码质量。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CORE STRENGTHS -->
+<div class="section-alt">
+  <div class="section" style="padding-top:52px;padding-bottom:52px;">
+    <div class="hl-grid">
+      <div class="hl-card reveal">
+        <div class="hl-card-top"><span class="hl-num">01</span><span class="hl-label-emoji">🚀</span><span class="hl-label">自驱学习</span></div>
+        <div class="hl-text">始终关注前沿 AI 技术，能结合业务需求快速实现技术转化</div>
+      </div>
+      <div class="hl-card reveal d1">
+        <div class="hl-card-top"><span class="hl-num">02</span><span class="hl-label-emoji">⚙️</span><span class="hl-label">5 年前端开发</span></div>
+        <div class="hl-text">擅长复杂业务重构与组件封装，主导工程化标准规范落地</div>
+      </div>
+      <div class="hl-card reveal d2">
+        <div class="hl-card-top"><span class="hl-num">03</span><span class="hl-label-emoji">🧠</span><span class="hl-label">AI 全栈闭环</span></div>
+        <div class="hl-text">具备生产级 RAG 系统与 Agent 工作流从 0 到 1 的独立开发经验</div>
+      </div>
+      <div class="hl-card reveal d3">
+        <div class="hl-card-top"><span class="hl-num">04</span><span class="hl-label-emoji">⚡</span><span class="hl-label">AI 效能驱动</span></div>
+        <div class="hl-text">擅长利用 Claude Code / Codex 等工具重塑研发流，实现极致交付</div>
+      </div>
+      <div class="hl-card reveal" style="transition-delay:.28s">
+        <div class="hl-card-top"><span class="hl-num">05</span><span class="hl-label-emoji">🤝</span><span class="hl-label">职业韧性</span></div>
+        <div class="hl-text">工作认真负责，乐于技术分享沉淀，具备极强的团队协作意识</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-block" id="contact">
+  <div class="contact-block-label">Get in touch</div>
+  <h2 class="contact-block-title">一起做点有意思的事</h2>
+  <p class="contact-block-sub">寻找 <strong>AI Agent 开发</strong> · <strong>前端工程师</strong> · <strong>全栈工程师</strong> 方向机会</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a class="contact-email-btn" href="mailto:15601060930@163.com">✉ 15601060930@163.com</a>
+    <a class="contact-email-btn" href="resume.pdf" target="_blank" style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);">📄 查看简历</a>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 任孟雪 · Built with Claude Code</span>
+  <div class="footer-links">
+    <a href="https://job-intel-agent.vercel.app" target="_blank">Job Intel Agent ↗</a>
+    <a href="https://offer-copilots.vercel.app" target="_blank">DevDoc RAG ↗</a>
+  </div>
+</footer>
+
+<script>
+/* count-up */
+(function(){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const t=+e.target.dataset.count;let c=0;const s=()=>{c++;e.target.textContent=c+(t>=5?'+':'');if(c<t)requestAnimationFrame(s);};requestAnimationFrame(s);io.unobserve(e.target);});},{threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(el=>io.observe(el));
+})();
+/* scroll reveal */
+(function(){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+/* terminal type-in */
+(function(){
+  const block=document.getElementById('terminal-block');if(!block)return;
+  const io=new IntersectionObserver(es=>{if(!es[0].isIntersecting)return;io.disconnect();
+    document.querySelectorAll('#term-body .tl').forEach((l,i)=>setTimeout(()=>l.classList.add('show'),i*110));
+  },{threshold:.3});
+  io.observe(block);
+})();
+/* scroll progress bar */
+(function(){
+  const bar=document.getElementById('scroll-progress');
+  window.addEventListener('scroll',()=>{
+    const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+    bar.style.width=Math.min(pct,100)+'%';
+  },{passive:true});
+})();
+/* cursor glow */
+(function(){
+  const g=document.getElementById('cursor-glow');
+  let raf;
+  document.addEventListener('mousemove',e=>{
+    cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(()=>{
+      g.style.left=e.clientX+'px';
+      g.style.top=e.clientY+'px';
+      g.style.opacity='1';
+    });
+  },{passive:true});
+  document.addEventListener('mouseleave',()=>{g.style.opacity='0';});
+})();
+/* magnetic buttons */
+(function(){
+  document.querySelectorAll('.btn-fill,.nav-cta').forEach(btn=>{
+    btn.addEventListener('mousemove',e=>{
+      const r=btn.getBoundingClientRect();
+      const x=(e.clientX-r.left-r.width/2)*.2;
+      const y=(e.clientY-r.top-r.height/2)*.2;
+      btn.style.transform=`translate(${x}px,${y}px)`;
+    });
+    btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+  });
+})();
+/* hero skills random active tint cycle */
+(function(){
+  const pills=document.querySelectorAll('.hero-skill:not(.active)');
+  if(!pills.length)return;
+  let i=0;
+  setInterval(()=>{
+    pills.forEach(p=>p.classList.remove('active'));
+    pills[i%pills.length].classList.add('active');
+    i++;
+  },1800);
+})();
+</script>
+</body>
+</html>
