@@ -56,9 +56,18 @@
   }
   .hero-left {
     display: flex; flex-direction: column; justify-content: center;
-    padding: 80px 56px 80px;
+    padding: 52px 52px;
     border-right: 1px solid var(--border);
   }
+  .hero-profile { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .hero-avatar {
+    width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+    object-fit: cover; object-position: center top;
+    border: 2px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  }
+  .hero-profile-name { font-size: 15px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 3px; }
+  .hero-profile-role { font-size: 10px; color: var(--orange); letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
   .hero-label {
     font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
     color: var(--orange); font-weight: 600; margin-bottom: 24px;
@@ -110,8 +119,8 @@
   .hero-right {
     background: var(--bg-alt);
     display: flex; flex-direction: column;
-    padding: 80px 56px;
-    gap: 20px;
+    padding: 52px 44px;
+    gap: 16px;
   }
   .hero-right-title { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
   /* mini project cards in hero */
@@ -599,6 +608,11 @@
   </div>
 
   <div class="hero-right">
+    <div class="hero-profile">
+      <img src="assets/avatar.jpg" alt="任孟雪" class="hero-avatar">
+      <div class="hero-profile-name">任孟雪</div>
+      <div class="hero-profile-role">AI Agent · Frontend Engineer</div>
+    </div>
     <div class="hero-right-title">精选项目</div>
     <div class="hero-proj-list">
       <a class="hero-proj" href="https://job-intel-agent.vercel.app" target="_blank">
