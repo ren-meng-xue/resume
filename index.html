@@ -55,11 +55,11 @@
     padding: 60px 0 0;
   }
   .hero-left {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 52px 52px;
+    display: flex; flex-direction: column; justify-content: center; gap: 16px;
+    padding: 40px 44px;
     border-right: 1px solid var(--border);
   }
-  .hero-profile { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .hero-profile { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid var(--border); }
   .hero-avatar {
     width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
     object-fit: cover; object-position: center top;
@@ -70,14 +70,14 @@
   .hero-profile-role { font-size: 10px; color: var(--orange); letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
   .hero-label {
     font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--orange); font-weight: 600; margin-bottom: 24px;
+    color: var(--orange); font-weight: 600; margin-bottom: 10px;
     display: flex; align-items: center; gap: 10px;
   }
   .hero-label::before { content: ''; width: 24px; height: 1.5px; background: var(--orange); }
   h1.hero-heading {
-    font-size: clamp(36px, 4vw, 54px);
+    font-size: clamp(32px, 3.6vw, 48px);
     font-weight: 900; line-height: 1.08;
-    letter-spacing: -.04em; margin-bottom: 20px;
+    letter-spacing: -.04em; margin-bottom: 10px;
   }
   h1.hero-heading .underline-orange {
     position: relative; display: inline-block;
@@ -90,11 +90,11 @@
     animation: shimmerSlide 2s linear infinite;
   }
   .hero-sub {
-    font-size: 17px; color: var(--muted); line-height: 1.8;
-    margin-bottom: 40px; max-width: 440px;
+    font-size: 15px; color: var(--muted); line-height: 1.65;
+    margin-bottom: 0; max-width: 440px;
   }
   .hero-sub strong { color: var(--text); font-weight: 600; }
-  .hero-actions { display: flex; gap: 12px; margin-bottom: 56px; }
+  .hero-actions { display: flex; gap: 12px; margin-bottom: 0; }
   .btn-fill {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 13px 28px; background: var(--text); color: #fff;
@@ -109,7 +109,75 @@
     transition: all .2s;
   }
   .btn-outline:hover { border-color: var(--text); color: var(--text); }
-  .hero-stats { display: flex; gap: 40px; }
+  .hero-stats { display: flex; gap: 28px; }
+
+  /* ── HERO TIMELINE ── */
+  .hero-timeline { display: flex; flex-direction: column; gap: 0; }
+  .ht-item {
+    display: flex; gap: 14px;
+    opacity: 0; transform: translateX(-10px);
+    animation: htItemIn .5s cubic-bezier(.23,1,.32,1) forwards;
+  }
+  .ht-item:nth-child(1) { animation-delay: .2s; }
+  .ht-item:nth-child(2) { animation-delay: .38s; }
+  .ht-item:nth-child(3) { animation-delay: .56s; }
+  @keyframes htItemIn { to { opacity: 1; transform: none; } }
+
+  .ht-left { display: flex; flex-direction: column; align-items: center; width: 14px; flex-shrink: 0; }
+  .ht-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px;
+    position: relative;
+  }
+  .ht-dot-muted { background: var(--border); border: 2px solid #c4c4c7; transition: border-color .2s; }
+  .ht-item:hover .ht-dot-muted { border-color: var(--orange); background: var(--orange-lt); }
+
+  .ht-dot-active {
+    background: var(--orange); border: 2px solid var(--orange);
+    box-shadow: 0 0 0 4px var(--orange-lt);
+    animation: htDotPulse 2s ease-in-out infinite;
+  }
+  .ht-dot-active::after {
+    content: ''; position: absolute; inset: -5px; border-radius: 50%;
+    border: 1.5px solid var(--orange); opacity: 0;
+    animation: htDotRing 2s ease-out infinite;
+  }
+  @keyframes htDotPulse {
+    0%, 100% { box-shadow: 0 0 0 4px var(--orange-lt); }
+    50%       { box-shadow: 0 0 0 7px rgba(249,115,22,.15); }
+  }
+  @keyframes htDotRing {
+    0%   { inset: -3px; opacity: .7; }
+    100% { inset: -10px; opacity: 0; }
+  }
+
+  .ht-line {
+    flex: 1; width: 1px; margin: 4px 0; min-height: 18px;
+    background: linear-gradient(180deg, var(--orange) 0%, var(--border) 100%);
+    background-size: 100% 200%;
+    animation: htLineFlow 3s linear infinite;
+    opacity: .5;
+  }
+  @keyframes htLineFlow {
+    0%   { background-position: 0 -100%; }
+    100% { background-position: 0 100%; }
+  }
+
+  .ht-body { padding-bottom: 18px; min-width: 0; }
+  .ht-item-current .ht-body { padding-bottom: 0; }
+  .ht-year { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .04em; margin-bottom: 2px; }
+  .ht-title { font-size: 14px; font-weight: 800; letter-spacing: -.01em; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+  .ht-badge {
+    font-size: 9px; font-weight: 700; letter-spacing: .08em;
+    background: var(--orange); color: #fff; border-radius: 4px; padding: 1px 5px;
+    vertical-align: middle;
+    animation: htBadgePulse 2s ease-in-out infinite;
+  }
+  @keyframes htBadgePulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: .6; }
+  }
+  .ht-desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; transition: color .2s; }
+  .ht-item:hover .ht-desc { color: var(--text); }
   .hero-stat-num {
     font-size: 32px; font-weight: 900; letter-spacing: -.04em; color: var(--text);
     display: block; line-height: 1;
@@ -119,27 +187,74 @@
   .hero-right {
     background: var(--bg-alt);
     display: flex; flex-direction: column;
-    padding: 52px 44px;
-    gap: 16px;
+    padding: 36px 36px;
+    gap: 10px;
   }
   .hero-right-title { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+
+  /* ── RESUME PREVIEW CARD ── */
+  .resume-preview-card {
+    position: absolute; top: 20px; right: 20px;
+    display: flex; gap: 10px; align-items: center;
+    background: rgba(255,255,255,.9); backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 10px 14px; cursor: pointer; text-decoration: none; z-index: 10;
+    box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .resume-preview-card:hover {
+    border-color: var(--orange);
+    box-shadow: 0 6px 24px rgba(249,115,22,.15);
+    transform: translateY(-2px);
+  }
+  .resume-preview-icon {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    background: var(--orange-lt); color: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .resume-preview-card:hover .resume-preview-icon { background: var(--orange); color: #fff; }
+  .resume-preview-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 1px; }
+  .resume-preview-sub { font-size: 10px; color: var(--muted); }
+  .resume-preview-arrow {
+    margin-left: auto; font-size: 14px; color: var(--muted);
+    transition: color .2s, transform .2s;
+  }
+  .resume-preview-card:hover .resume-preview-arrow { color: var(--orange); transform: translate(2px, -2px); }
+
+  /* ── RESUME PILL ── */
+  .resume-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 100px; padding: 4px 12px;
+    text-decoration: none; transition: all .2s;
+  }
+  .resume-pill:hover {
+    color: var(--orange); border-color: var(--orange);
+    background: var(--orange-lt);
+  }
   /* mini project cards in hero */
   .hero-proj-list { display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center; }
   .hero-proj {
     background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
-    padding: 20px 24px; display: flex; align-items: center; gap: 16px;
+    padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;
     transition: all .25s; cursor: pointer;
   }
   .hero-proj:hover { border-color: var(--orange); transform: translateX(4px); box-shadow: 0 4px 16px rgba(249,115,22,.1); }
   .hero-proj-icon {
-    width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
   }
-  .icon-orange { background: var(--orange-lt); }
-  .icon-gray   { background: #f3f4f6; }
-  .icon-dark   { background: var(--bg-dark); }
-  .hero-proj-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; letter-spacing: -.01em; }
-  .hero-proj-tag  { font-size: 11px; color: var(--muted); }
+  .icon-orange  { background: var(--orange-lt); }
+  .icon-gray    { background: #f3f4f6; }
+  .icon-dark    { background: var(--bg-dark); }
+  .icon-purple  { background: #f3f0ff; }
+  .icon-blue    { background: #eff6ff; }
+  .hero-proj-main { min-width: 0; }
+  .hero-proj-name { font-size: 15px; font-weight: 800; margin-bottom: 4px; letter-spacing: -.01em; }
+  .hero-proj-business { font-size: 12.5px; color: var(--text); line-height: 1.55; margin-bottom: 4px; }
+  .hero-proj-tag  { font-size: 11px; color: var(--muted); line-height: 1.5; }
   .hero-proj-arrow { margin-left: auto; color: var(--muted); font-size: 16px; transition: transform .2s; }
   .hero-proj:hover .hero-proj-arrow { transform: translateX(4px); color: var(--orange); }
   /* skill cloud in hero */
@@ -195,7 +310,7 @@
     background: #f3f4f6; overflow: hidden;
     display: flex; align-items: flex-start; justify-content: center;
   }
-  .featured-media img { width: 100%; height: auto; display: block; }
+  .featured-media img { width: 100%; height: auto; display: block; margin-top:85px}
   .proj-tag {
     display: inline-flex; align-items: center;
     font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
@@ -574,84 +689,120 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-left">
+  <div class="hero-left" style="position:relative;">
     <div class="hero-blob hero-blob-1"></div>
     <div class="hero-blob hero-blob-2"></div>
-    <div class="hero-label">AI Agent Developer · Frontend Engineer</div>
+
+    <div class="hero-label">AI Agent Engineer</div>
     <h1 class="hero-heading">
       5 年前端工程<br>
       延伸到<span class="underline-orange">AI 落地</span>
     </h1>
-    <p class="hero-sub">
-      独立开发 <strong>2 款生产级 AI 产品</strong>，从 0 到 1 全链路交付；<br>
-      主导联想<strong>制造后台报表</strong>与<strong>嵌入式 AI Chatbot SDK</strong> 落地。<br>
-      <span style="color:var(--muted);font-size:13px;">CLAUDE.md 规范驱动 AI 协作，LangGraph · RAG 全链路落地。</span>
-    </p>
+
+    <!-- 时间线 -->
+    <div class="hero-timeline">
+      <div class="ht-item">
+        <div class="ht-left">
+          <div class="ht-dot ht-dot-muted"></div>
+          <div class="ht-line"></div>
+        </div>
+        <div class="ht-body">
+          <div class="ht-year">2021/03 – 2023/11 · 易显科技</div>
+          <div class="ht-title">前端工程师</div>
+          <div class="ht-desc">主导驾校运维系统与约课平台，覆盖招、约、训、模、考全流程，支撑学员预约业务闭环。</div>
+        </div>
+      </div>
+      <div class="ht-item">
+        <div class="ht-left">
+          <div class="ht-dot ht-dot-muted"></div>
+          <div class="ht-line"></div>
+        </div>
+        <div class="ht-body">
+          <div class="ht-year">2024/02 – 2026/03 · 驻场联想（北京）· 独立负责</div>
+          <div class="ht-title">前端工程师 · AI 落地</div>
+          <div class="ht-desc">制造数据平台智能化升级，主导嵌入式 Chatbot SDK 与 AI Coach，推动数据查询向自然语言交互演进。</div>
+        </div>
+      </div>
+      <div class="ht-item ht-item-current">
+        <div class="ht-left">
+          <div class="ht-dot ht-dot-active"></div>
+        </div>
+        <div class="ht-body">
+          <div class="ht-year">2026/03 – 今 · 独立开发</div>
+          <div class="ht-title">个人 AI 项目 <span class="ht-badge">NOW</span></div>
+          <div class="ht-desc">Multi-Agent Coach · Job Intel Agent · DevDoc RAG，LangGraph · RAG · 多 Agent 全链路，从 0 到 1 独立交付。</div>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-actions">
       <a href="#projects" class="btn-fill">查看项目 →</a>
       <a href="#contact" class="btn-outline">联系我</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <span class="hero-stat-num" data-count="5">0</span>
-        <div class="hero-stat-label">Years Exp.</div>
-      </div>
-      <div>
-        <span class="hero-stat-num" data-count="2">0</span>
-        <div class="hero-stat-label">AI Projects</div>
-      </div>
-      <div>
-        <span class="hero-stat-num" data-count="3">0</span>
-        <div class="hero-stat-label">Global Dashboards</div>
-      </div>
     </div>
   </div>
 
   <div class="hero-right">
     <div class="hero-profile">
       <img src="assets/avatar.jpg" alt="任孟雪" class="hero-avatar">
-      <div class="hero-profile-name">任孟雪</div>
-      <div class="hero-profile-role">AI Agent · Frontend Engineer</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <div class="hero-profile-name">任孟雪</div>
+          <div class="hero-profile-role">AI Agent Engineer</div>
+        </div>
+        <a href="assets/resume.pdf" target="_blank" class="resume-pill">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          查看简历 PDF ↗
+        </a>
+      </div>
     </div>
     <div class="hero-right-title">精选项目</div>
     <div class="hero-proj-list">
+      <a class="hero-proj" href="#projects">
+        <div class="hero-proj-icon icon-purple">🎓</div>
+        <div class="hero-proj-main">
+          <div class="hero-proj-name">Multi-Agent Coach</div>
+          <div class="hero-proj-business">面向求职者的 AI 模拟面试教练，覆盖岗位准备、追问面试、评分复盘到训练计划。</div>
+          <div class="hero-proj-tag">层次化多 Agent · ReAct Loop · 候选人长期记忆</div>
+        </div>
+        <div class="hero-proj-arrow">→</div>
+      </a>
       <a class="hero-proj" href="https://job-intel-agent.vercel.app/" target="_blank">
         <div class="hero-proj-icon icon-orange">🤖</div>
-        <div>
+        <div class="hero-proj-main">
           <div class="hero-proj-name">Job Intel Agent</div>
-          <div class="hero-proj-tag">LangGraph · Multi-step Agent · SSE</div>
+          <div class="hero-proj-business">把 JD、简历和公开信息转成职位解读、公司画像、匹配度和面试备战报告。</div>
+          <div class="hero-proj-tag">LangGraph StateGraph · Human-in-the-Loop · SSE</div>
         </div>
         <div class="hero-proj-arrow">→</div>
       </a>
       <a class="hero-proj" href="https://offer-copilots.vercel.app/" target="_blank">
-        <div class="hero-proj-icon icon-gray">🔍</div>
-        <div>
+        <div class="hero-proj-icon icon-blue">🔍</div>
+        <div class="hero-proj-main">
           <div class="hero-proj-name">DevDoc RAG</div>
-          <div class="hero-proj-tag">混合检索 · Cohere Rerank · Celery SSE</div>
+          <div class="hero-proj-business">面向技术文档和项目资料的知识库问答，解决资料导入、检索溯源和流式答疑。</div>
+          <div class="hero-proj-tag">混合检索 · Cohere Rerank · Citation Guard</div>
         </div>
         <div class="hero-proj-arrow">→</div>
       </a>
-      <div class="hero-proj">
-        <div class="hero-proj-icon icon-dark" style="color:#fbbf24;">📊</div>
-        <div>
-          <div class="hero-proj-name">联想全球工厂大屏</div>
-          <div class="hero-proj-tag">ECharts · Vue3 · 3 Global Factories</div>
-        </div>
-      </div>
     </div>
     <div>
       <div class="hero-right-title" style="margin-bottom:12px;">核心技术</div>
       <div class="hero-skills">
         <span class="hero-skill active">LangGraph</span>
+        <span class="hero-skill active">OpenAI / GPT-4o</span>
+        <span class="hero-skill active">Multi-Agent</span>
+        <span class="hero-skill active">ReAct Loop</span>
         <span class="hero-skill active">RAG</span>
         <span class="hero-skill active">React / Next.js</span>
-        <span class="hero-skill active">Vue 3</span>
         <span class="hero-skill">FastAPI</span>
+        <span class="hero-skill">PostgreSQL</span>
         <span class="hero-skill">pgvector</span>
-        <span class="hero-skill">TypeScript</span>
-        <span class="hero-skill">ECharts</span>
+        <span class="hero-skill">MCP</span>
         <span class="hero-skill">SSE</span>
-        <span class="hero-skill">Tailwind</span>
+        <span class="hero-skill">Celery / Redis</span>
+        <span class="hero-skill">Cohere Rerank</span>
+        <span class="hero-skill">Firecrawl</span>
+        <span class="hero-skill">TypeScript</span>
       </div>
     </div>
   </div>
@@ -667,15 +818,70 @@
     <div class="section-line"></div>
   </div>
 
+  <!-- Multi-Agent Coach -->
+  <div class="proj-grid" style="grid-template-columns:1fr;margin-top:20px;">
+    <div class="featured-card reveal" style="grid-template-columns:1fr;">
+      <div class="featured-body">
+        <div class="proj-tag">★ 层次化多 Agent · LangGraph · GPT-4o · Claude Code 驱动</div>
+        <div class="proj-name">Multi-Agent Coach</div>
+        <p class="proj-desc" style="font-size:13px;margin-bottom:20px;">
+          面向 AI Agent 工程师求职者的多 Agent 模拟面试系统。<strong style="color:var(--text)">5 阶段全链路</strong>：Prepare → Interview → Evaluate → Coach → Report，跨 session 持续积累候选人画像，个性化复盘闭环。
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+          <div style="border-left:2.5px solid var(--orange);padding:10px 12px;background:var(--orange-lt);border-radius:0 8px 8px 0;">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;">Chief ReAct Loop · max 4 iter 防死循环</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.65;">超限自动降级跳过工具调用直接出题，根除 Agent 卡死风险；Evaluator、Designer 作为独立子 Agent 接受委托，职责隔离、互不干扰</div>
+          </div>
+          <div style="border-left:2.5px solid var(--orange);padding:10px 12px;background:var(--orange-lt);border-radius:0 8px 8px 0;">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;">candidate_memory 跨 session 弱点积累</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.65;">Evaluator 每轮提取行为信号写入 JSONB（user 维度），Coach Agent 读取长期画像生成结构化复盘计划（CoachPlanSchema），而非单场面试的一次性建议</div>
+          </div>
+          <div style="border-left:2.5px solid var(--orange);padding:10px 12px;background:var(--orange-lt);border-radius:0 8px 8px 0;">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;">SSE 分类事件流 · Agent 决策全透明</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.65;">工具调用、评分、出题实时推送前端，Trace Panel 展示每轮 Chief 决策链路，面试过程完全可追溯</div>
+          </div>
+        </div>
+
+        <div class="proj-links" style="margin-top:4px;">
+          <span style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;animation:cblink .8s step-end infinite;display:inline-block;"></span>
+            本地全流程已验证 · 待部署上线
+          </span>
+          <button onclick="openCoachModal()" class="link-primary" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;gap:5px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            查看完整面试演示
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coach Demo Modal -->
+  <div id="coach-demo-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.82);align-items:center;justify-content:center;" onclick="if(event.target===this){closeCoachModal();}">
+    <div style="position:relative;width:70vw;max-width:1280px;">
+      <button onclick="closeCoachModal()" style="position:absolute;top:-44px;right:0;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px 10px;line-height:1;opacity:.85;" title="关闭 (Esc)">✕</button>
+      <video id="coach-demo-video" src="assets/multi-agent-coach-interview-demo.mp4" style="width:100%;border-radius:10px;display:block;box-shadow:0 24px 80px rgba(0,0,0,.6);" controls></video>
+    </div>
+  </div>
+  <script>
+  function openCoachModal(){const m=document.getElementById('coach-demo-modal');m.style.display='flex';document.getElementById('coach-demo-video').play();}
+  function closeCoachModal(){const m=document.getElementById('coach-demo-modal');m.style.display='none';const v=document.getElementById('coach-demo-video');v.pause();v.currentTime=0;}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCoachModal();});
+  </script>
+
   <!-- Featured: Job Intel Agent -->
-  <div class="featured-card reveal">
+  <div class="featured-card reveal" style="margin-top:20px;">
     <div class="featured-body">
       <div class="proj-tag">★ AI Agent · LangGraph</div>
       <div class="proj-name">Job Intel Agent</div>
-      <p class="proj-desc">AI 驱动的求职情报助手。粘贴 JD 链接或上传简历（PDF/DOCX），LangGraph <strong style="color:var(--text)">5 节点 2 中断 StateGraph</strong> 流水线对 6 个调研方向并行分析，生成职位解读、匹配度评估、公司画像、面试题（附答题思路）、薪资区间、备战建议结构化报告。<strong style="color:var(--text)">checkpoint 断点恢复 + interrupt() Human-in-the-Loop</strong>，两处审核节点供用户干预；Redis Pub/Sub + SSE 零轮询实时推送；支持 Vision 多模态 JD 截图输入。</p>
+      <p class="proj-desc">AI 驱动的求职情报助手。粘贴 JD 链接或上传简历（PDF/DOCX），LangGraph <strong style="color:var(--text)">5 节点 StateGraph + 1 个 interrupt</strong> 流水线对 6 个调研方向并行分析，生成职位解读、匹配度评估、公司画像、面试题（附答题思路）、薪资区间、备战建议结构化报告。<strong style="color:var(--text)">checkpoint 断点恢复 + Human-in-the-Loop</strong>，JD 确认、方向选择和报告审核节点供用户干预；Redis Pub/Sub + SSE 零轮询实时推送；支持 Vision 多模态 JD 截图输入。</p>
       <div class="proj-stack">
         <span class="chip">LangGraph</span><span class="chip">StateGraph</span>
         <span class="chip">Human-in-the-Loop</span>
+        <span class="chip">GPT-4o</span>
+        <span class="chip">Tavily</span>
+        <span class="chip">Firecrawl</span>
         <span class="chip">FastAPI</span><span class="chip">Next.js</span>
         <span class="chip">pgvector</span><span class="chip">SSE</span>
         <span class="chip">Celery + Redis</span>
@@ -696,48 +902,32 @@
   <div class="proj-grid" style="grid-template-columns:1fr;margin-top:20px;">
     <div class="featured-card reveal" style="grid-template-columns:1fr 1.1fr;">
       <div class="featured-body">
-        <div class="proj-tag">全栈独立开发 · RAG Pipeline</div>
+        <div class="proj-tag">全栈独立开发 · RAG Pipeline · GPT-4o</div>
         <div class="proj-name">DevDoc RAG</div>
         <p class="proj-desc" style="font-size:13px;">
-          面向开发者的技术文档问答系统。粘贴 URL 或上传 PDF，Firecrawl 异步爬取 → 语义 Chunking（H1–H4 路径保留）→ pgvector 向量 + 全文双路检索 → Cohere rerank-v3.5 语义重排 → SSE 流式回答 + 强制引用校验（无来源直接拒绝入库）。
+          企业级 RAG 问答平台，支持 PDF / URL 多源文档接入。<strong>结构感知 Chunking</strong>（512 token / 64 overlap）→ pgvector IVFFlat + pg_trgm GIN <strong>双路检索</strong>（各 top-10）→ <strong>RRF k=60 融合</strong> → Cohere rerank-v3.5（top-5，min 0.15）→ GPT-4o 流式生成 + <strong>引用校验门控</strong>。
         </p>
-        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
-          <div style="font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;">
-            <span style="color:var(--orange);font-weight:700;flex-shrink:0;">①</span>
-            <span>混合检索：pgvector 余弦 + ts_rank_cd 全文双路召回，Cohere rerank-v3.5 重排过滤</span>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+          <div style="border-left:2.5px solid var(--orange);padding:10px 12px;background:var(--orange-lt);border-radius:0 8px 8px 0;">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;">8 条逻辑路径 · 双层语义缓存</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.65;">三路意图分发（通用 / 宏观摘要 / 微观检索）+ L1 Redis 精确缓存（24 h TTL）+ L2 语义向量缓存（相似度 0.96），多知识库会话作用域自动路由（top-3 KB）</div>
           </div>
-          <div style="font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;">
-            <span style="color:var(--orange);font-weight:700;flex-shrink:0;">②</span>
-            <span>查询改写 + 滑动窗口上下文管理，Celery 异步摘要压缩（20 条触发）</span>
+          <div style="border-left:2.5px solid var(--orange);padding:10px 12px;background:var(--orange-lt);border-radius:0 8px 8px 0;">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;">12+ 监控维度 · 全链路可观测</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.65;">Prometheus + Grafana 4 大仪表盘（RAG · Cache · HTTP · Celery），采集 TTFT、各阶段耗时、缓存命中率全链路指标</div>
           </div>
-          <div style="font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;">
-            <span style="color:var(--orange);font-weight:700;flex-shrink:0;">③</span>
-            <span>JWT 全链路认证 + Alembic 迁移 + Docker Compose 本地编排 + Vercel / Railway 生产部署</span>
+          <div style="border-left:2.5px solid var(--orange);padding:10px 12px;background:var(--orange-lt);border-radius:0 8px 8px 0;">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;">30+ 黄金测试集 · 真实链路 eval</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.65;">合成数据集 + 真实链路 eval，覆盖召回质量、幻觉率全维度；Celery 异步入库 + SSE 推流，Docker Compose 编排</div>
           </div>
-        </div>
-        <div class="proj-stack">
-          <span class="chip">pgvector</span><span class="chip">Cohere Rerank</span>
-          <span class="chip">FastAPI</span><span class="chip">Celery + Redis</span>
-          <span class="chip">Next.js</span><span class="chip">shadcn/ui</span>
-          <span class="chip">Firecrawl</span><span class="chip">SSE</span>
-          <span class="chip">Docker Compose</span>
-          <span class="chip">Vercel</span><span class="chip">Railway</span>
         </div>
         <div class="proj-links" style="margin-top:20px;">
-          <a class="link-primary" href="https://offer-copilots.vercel.app/" target="_blank">↗ 查看 Demo</a>
+          <a class="link-primary" href="https://offer-copilots.vercel.app/" target="_blank">↗ 查看项目</a>
         </div>
       </div>
-      <!-- 图片占位区，待截图 -->
-      <div class="featured-media" style="flex-direction:column;gap:0;background:linear-gradient(135deg,#fff7ed 0%,#f3f4f6 100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;padding:32px;">
-          <div style="font-size:52px;">🔍</div>
-          <div style="font-size:13px;font-weight:700;color:var(--text);letter-spacing:-.02em;">DevDoc RAG</div>
-          <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.7;max-width:180px;">演示截图<br>即将补充</div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:4px;">
-            <span style="font-size:10px;color:var(--orange);border:1px solid var(--orange);border-radius:4px;padding:2px 7px;">Hybrid Retrieval</span>
-            <span style="font-size:10px;color:var(--orange);border:1px solid var(--orange);border-radius:4px;padding:2px 7px;">Citation Guard</span>
-          </div>
-        </div>
+      <!-- DevRAG 演示视频 -->
+      <div class="featured-media" style="flex-direction:column;gap:0;background:#f3f4f6;overflow:hidden;align-items:stretch;">
+        <video src="assets/devrag-demo.mp4" style="width:100%;height:auto;display:block;object-fit:cover;" autoplay loop muted playsinline></video>
       </div>
     </div>
   </div>
@@ -771,9 +961,9 @@
         <div class="proto-frame-fade"></div>
       </div>
       <div class="proto-body">
-        <div class="proto-tag">CLAUDE.md · Workflow</div>
-        <div class="proto-name">AI 协作执行指南</div>
-        <p class="proto-desc">为项目编写的 Claude Code 规范可视化——Skill 路由、分级约束、架构规则全览。</p>
+        <div class="proto-tag">Claude Code · 工程体系</div>
+        <div class="proto-name">Skills · Hooks · Agents 全览</div>
+        <p class="proto-desc">spec-plan 解决 token 腐烂、video-to-chinese 快速学习、Stop Hook QA 门控、backend / frontend / reviewer / tester 并行 subagent——完整 AI 协作闭环可视化。</p>
         <a class="link-primary" href="prototypes/claude-workflow.html" target="_blank">↗ 全屏查看</a>
       </div>
     </div>
@@ -792,6 +982,25 @@
           <span class="chip" style="align-self:center;">Claude Code</span>
           <span class="chip" style="align-self:center;">设计迭代</span>
         </div>
+      </div>
+    </div>
+
+    <!-- Multi-Agent Coach 原型演示 GIF — 全宽 -->
+    <div style="grid-column:1/-1;padding:32px 0 8px;border-top:1px solid var(--border);margin-top:8px;">
+      <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px;">
+        <span style="color:var(--orange);font-weight:700;">Multi-Agent Coach</span>
+        <span>面试全流程 · 原型演示</span>
+      </div>
+    </div>
+    <div class="proto-card proto-card-wide reveal" style="grid-column:1/-1;">
+      <div class="proto-frame" style="overflow:hidden;">
+        <video src="assets/multi-agent-coach-demo.mp4" style="width:100%;height:auto;display:block;" autoplay loop muted playsinline></video>
+      </div>
+      <div class="proto-body">
+        <div class="proto-tag">Multi-Agent Coach · 原型演示</div>
+        <div class="proto-name">面试教练仪表盘原型</div>
+        <p class="proto-desc">Coach 仪表盘设计原型——候选人历次面试评分趋势、弱点标签积累、Coach Agent 结构化训练计划，体现多 Agent 系统的用户侧呈现思路。</p>
+        <a class="link-primary" href="prototypes/prototype-light.html" target="_blank">↗ 全屏查看</a>
       </div>
     </div>
   </div>
@@ -924,12 +1133,18 @@
       <div class="skill-col-title">AI / Agent</div>
       <div class="skill-pills">
         <span class="skill-pill hot">LangGraph</span>
+        <span class="skill-pill hot">Multi-Agent / ReAct</span>
+        <span class="skill-pill hot">OpenAI / GPT-4o</span>
         <span class="skill-pill hot">RAG 系统</span>
-        <span class="skill-pill hot">LLM 集成</span>
+        <span class="skill-pill">LangChain</span>
+        <span class="skill-pill">MCP</span>
         <span class="skill-pill">pgvector</span>
-        <span class="skill-pill">SSE 流式</span>
+        <span class="skill-pill">Cohere Rerank</span>
+        <span class="skill-pill">Firecrawl</span>
+        <span class="skill-pill">Tavily</span>
         <span class="skill-pill">Human-in-Loop</span>
-        <span class="skill-pill">CLAUDE.md</span>
+        <span class="skill-pill">SSE 流式</span>
+        <span class="skill-pill">Claude Code</span>
       </div>
     </div>
     <div class="skill-col">
@@ -938,32 +1153,41 @@
         <span class="skill-pill hot">React 18 / Next.js</span>
         <span class="skill-pill hot">Vue 3 全家桶</span>
         <span class="skill-pill hot">TypeScript</span>
-        <span class="skill-pill">Tailwind CSS</span>
+        <span class="skill-pill">Tailwind CSS / shadcn/ui</span>
         <span class="skill-pill">ECharts 大屏</span>
-        <span class="skill-pill">Ant Design</span>
-        <span class="skill-pill">shadcn/ui</span>
+        <span class="skill-pill">Element Plus / Element UI</span>
+        <span class="skill-pill">Ant Design Vue</span>
+        <span class="skill-pill">Pinia / Vuex</span>
+        <span class="skill-pill">vue-i18n / Clerk</span>
+        <span class="skill-pill">Vitest / Testing Library</span>
       </div>
     </div>
     <div class="skill-col">
       <div class="skill-col-title">Backend</div>
       <div class="skill-pills">
-        <span class="skill-pill">FastAPI</span>
-        <span class="skill-pill">Celery + Redis</span>
-        <span class="skill-pill">PostgreSQL</span>
-        <span class="skill-pill">Alembic ORM</span>
-        <span class="skill-pill">Node.js</span>
-        <span class="skill-pill">RESTful API</span>
+        <span class="skill-pill hot">FastAPI</span>
+        <span class="skill-pill hot">SQLAlchemy 2 async</span>
+        <span class="skill-pill hot">Celery + Redis</span>
+        <span class="skill-pill">asyncpg / PostgreSQL</span>
+        <span class="skill-pill">Alembic 迁移</span>
+        <span class="skill-pill">Pydantic v2</span>
+        <span class="skill-pill">structlog</span>
+        <span class="skill-pill">JWT 认证</span>
+        <span class="skill-pill">RESTful + SSE</span>
       </div>
     </div>
     <div class="skill-col">
       <div class="skill-col-title">Engineering</div>
       <div class="skill-pills">
-        <span class="skill-pill">Vercel</span>
         <span class="skill-pill">Docker Compose</span>
+        <span class="skill-pill">Vercel / Railway</span>
         <span class="skill-pill">Vite / Webpack</span>
-        <span class="skill-pill">i18n 国际化</span>
         <span class="skill-pill">pnpm / uv</span>
-        <span class="skill-pill">pytest</span>
+        <span class="skill-pill">pytest / pytest-asyncio</span>
+        <span class="skill-pill">Ruff / Mypy</span>
+        <span class="skill-pill">Playwright</span>
+        <span class="skill-pill">Sentry</span>
+        <span class="skill-pill">i18n 国际化</span>
       </div>
     </div>
   </div>
@@ -995,7 +1219,7 @@
       <div class="exp-date">2021/03 — 2023/11</div>
       <div>
         <div class="exp-company">易显科技有限公司</div>
-        <div class="exp-role">Frontend Engineer</div>
+        <div class="exp-role">前端工程师</div>
         <ul class="exp-desc" style="list-style:none;display:flex;flex-direction:column;gap:6px;">
           <li>根据 UI 设计稿完成页面还原，结合 rem/vw 方案实现移动端等比缩放与多尺寸适配。</li>
           <li>封装 jsBridge 通信模块，统一 App 内嵌 H5 与原生端交互协议，提升调用稳定性与扩展性。</li>
@@ -1045,15 +1269,40 @@
   <p class="contact-block-sub">寻找 <strong>AI Agent 开发</strong> · <strong>前端工程师</strong> · <strong>全栈工程师</strong> 方向机会</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
     <a class="contact-email-btn" href="mailto:15601060930@163.com">✉ 15601060930@163.com</a>
-    <a class="contact-email-btn" href="resume.pdf" target="_blank" style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);">📄 查看简历</a>
+    <button class="contact-email-btn" onclick="toggleWechatQR()" style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);cursor:pointer;font-size:inherit;font-family:inherit;outline:none;">
+      💬 微信扫码联系
+    </button>
+  </div>
+
+  <!-- 微信二维码弹层 -->
+  <div id="wechat-qr-overlay" onclick="toggleWechatQR()" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+    <div onclick="event.stopPropagation()" style="background:#fff;border-radius:20px;padding:28px 32px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.3);max-width:320px;width:90%;">
+      <div style="font-size:13px;font-weight:700;color:#0a0a0a;margin-bottom:16px;letter-spacing:-.01em;">微信扫码添加</div>
+      <img src="assets/wechat-qr.png" alt="微信二维码" style="width:100%;height:auto;border-radius:12px;display:block;border:1px solid #e4e4e7;">
+      <div style="font-size:12px;color:#71717a;margin-top:12px;">任孟雪 · AI Agent Engineer</div>
+      <button onclick="toggleWechatQR()" style="margin-top:16px;width:100%;padding:10px;border:1px solid #e4e4e7;border-radius:10px;background:#f9f7f4;cursor:pointer;font-size:13px;color:#71717a;">关闭</button>
+    </div>
   </div>
 </div>
+
+<script>
+function toggleWechatQR(){
+  var el = document.getElementById('wechat-qr-overlay');
+  el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') {
+    document.getElementById('wechat-qr-overlay').style.display = 'none';
+  }
+});
+</script>
 
 <footer>
   <span>© 2026 任孟雪 · Built with Claude Code</span>
   <div class="footer-links">
     <a href="https://job-intel-agent.vercel.app/" target="_blank">Job Intel Agent ↗</a>
     <a href="https://offer-copilots.vercel.app/" target="_blank">DevDoc RAG ↗</a>
+    <a href="https://frontend-sand-mu-31.vercel.app" target="_blank">Multi-Agent Coach ↗</a>
   </div>
 </footer>
 
@@ -1120,6 +1369,79 @@
     pills[i%pills.length].classList.add('active');
     i++;
   },1800);
+})();
+</script>
+
+<!-- 悬浮拖拽视频 -->
+<div id="float-video-wrap" style="
+  position:fixed; top:65px; right:32px; z-index:9999;
+  width:140px; border-radius:16px; overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.16);
+  cursor:grab; user-select:none;
+  border:2px solid rgba(255,255,255,.18);
+  transition:box-shadow .2s;
+">
+  <video id="float-video" src="assets/avatar-intro.mp4" loop playsinline
+    style="width:100%;display:block;pointer-events:none;">
+  </video>
+  <button id="float-mute-btn" onclick="toggleMute()" style="
+    position:absolute; bottom:0; left:0; right:0;
+    width:100%; height:36px; border-radius:0 0 14px 14px;
+    background:rgba(0,0,0,.6); border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    font-size:12px; font-weight:600; color:#fff;
+    backdrop-filter:blur(6px); letter-spacing:.04em;
+    transition:background .2s; pointer-events:all;
+  " title="点击播放"><span id="float-mute-icon">▶</span><span id="float-mute-label">点击播放</span></button>
+</div>
+<script>
+function toggleMute(){
+  var v = document.getElementById('float-video');
+  var icon = document.getElementById('float-mute-icon');
+  var label = document.getElementById('float-mute-label');
+  if (v.paused) {
+    v.muted = false;
+    v.play();
+    icon.textContent = '🔊';
+    label.textContent = '点击暂停';
+  } else {
+    v.pause();
+    v.currentTime = 0;
+    icon.textContent = '▶';
+    label.textContent = '点击播放';
+  }
+}
+</script>
+<script>
+(function(){
+  var el = document.getElementById('float-video-wrap');
+  var dragging = false, ox = 0, oy = 0;
+  el.addEventListener('mousedown', function(e){
+    dragging = true;
+    el.style.cursor = 'grabbing';
+    el.style.transition = 'none';
+    var r = el.getBoundingClientRect();
+    ox = e.clientX - r.left;
+    oy = e.clientY - r.top;
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', function(e){
+    if (!dragging) return;
+    var x = e.clientX - ox;
+    var y = e.clientY - oy;
+    x = Math.max(0, Math.min(window.innerWidth - el.offsetWidth, x));
+    y = Math.max(0, Math.min(window.innerHeight - el.offsetHeight, y));
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.right = 'auto';
+    el.style.bottom = 'auto';
+  });
+  document.addEventListener('mouseup', function(){
+    if (!dragging) return;
+    dragging = false;
+    el.style.cursor = 'grab';
+    el.style.transition = 'box-shadow .2s';
+  });
 })();
 </script>
 </body>
