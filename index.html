@@ -846,7 +846,7 @@
         <div class="proj-links" style="margin-top:4px;">
           <span style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;">
             <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;animation:cblink .8s step-end infinite;display:inline-block;"></span>
-            本地全流程已验证 · 待部署上线
+            已上线
           </span>
           <button onclick="openCoachModal()" class="link-primary" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;gap:5px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -861,11 +861,11 @@
   <div id="coach-demo-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.82);align-items:center;justify-content:center;" onclick="if(event.target===this){closeCoachModal();}">
     <div style="position:relative;width:70vw;max-width:1280px;">
       <button onclick="closeCoachModal()" style="position:absolute;top:-44px;right:0;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px 10px;line-height:1;opacity:.85;" title="关闭 (Esc)">✕</button>
-      <video id="coach-demo-video" src="assets/multi-agent-coach-interview-demo.mp4" style="width:100%;border-radius:10px;display:block;box-shadow:0 24px 80px rgba(0,0,0,.6);" controls></video>
+      <video id="coach-demo-video" data-src="assets/multi-agent-coach-interview-demo.mp4" preload="none" style="width:100%;border-radius:10px;display:block;box-shadow:0 24px 80px rgba(0,0,0,.6);" controls></video>
     </div>
   </div>
   <script>
-  function openCoachModal(){const m=document.getElementById('coach-demo-modal');m.style.display='flex';document.getElementById('coach-demo-video').play();}
+  function openCoachModal(){const m=document.getElementById('coach-demo-modal');m.style.display='flex';const v=document.getElementById('coach-demo-video');if(!v.src){v.src=v.dataset.src;}v.play();}
   function closeCoachModal(){const m=document.getElementById('coach-demo-modal');m.style.display='none';const v=document.getElementById('coach-demo-video');v.pause();v.currentTime=0;}
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCoachModal();});
   </script>
@@ -927,7 +927,7 @@
       </div>
       <!-- DevRAG 演示视频 -->
       <div class="featured-media" style="flex-direction:column;gap:0;background:#f3f4f6;overflow:hidden;align-items:stretch;">
-        <video src="assets/devrag-demo.mp4" style="width:100%;height:auto;display:block;object-fit:cover;" autoplay loop muted playsinline></video>
+        <video src="assets/devrag-demo.mp4" preload="none" poster="assets/devrag-poster.jpg" style="width:100%;height:auto;display:block;object-fit:cover;" autoplay loop muted playsinline></video>
       </div>
     </div>
   </div>
@@ -1381,7 +1381,7 @@ document.addEventListener('keydown', function(e){
   border:2px solid rgba(255,255,255,.18);
   transition:box-shadow .2s;
 ">
-  <video id="float-video" src="assets/avatar-intro.mp4" loop playsinline
+  <video id="float-video" src="assets/avatar-intro-compressed.mp4" loop playsinline
     style="width:100%;display:block;pointer-events:none;">
   </video>
   <button id="float-mute-btn" onclick="toggleMute()" style="
