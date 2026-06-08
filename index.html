@@ -928,7 +928,7 @@
       </div>
       <!-- DevRAG 演示视频 -->
       <div class="featured-media" style="flex-direction:column;gap:0;background:#f3f4f6;overflow:hidden;align-items:stretch;">
-        <video src="assets/devrag-demo.mp4" preload="none" poster="assets/devrag-poster.jpg" style="width:100%;height:auto;display:block;object-fit:cover;" autoplay loop muted playsinline></video>
+        <video id="devrag-video" data-src="assets/devrag-demo.mp4" preload="none" poster="assets/devrag-poster.jpg" style="width:100%;height:auto;display:block;object-fit:cover;" loop muted playsinline></video>
       </div>
     </div>
   </div>
@@ -1308,6 +1308,17 @@ document.addEventListener('keydown', function(e){
 </footer>
 
 <script>
+/* devrag video lazy load */
+(function(){
+  var v=document.getElementById('devrag-video');if(!v)return;
+  var io=new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting)return;
+    io.disconnect();
+    v.src=v.dataset.src;
+    v.play();
+  },{threshold:.1});
+  io.observe(v);
+})();
 /* count-up */
 (function(){
   const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const t=+e.target.dataset.count;let c=0;const s=()=>{c++;e.target.textContent=c+(t>=5?'+':'');if(c<t)requestAnimationFrame(s);};requestAnimationFrame(s);io.unobserve(e.target);});},{threshold:.5});
