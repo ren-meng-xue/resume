@@ -666,6 +666,67 @@
   .proto-card:hover .proto-frame-fade {
     background: linear-gradient(to bottom, transparent 50%, rgba(249,247,244,.95) 100%);
   }
+
+  /* ── MOBILE RESPONSIVE ── */
+  @media (max-width: 768px) {
+    /* Nav */
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+
+    /* Hero */
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 24px 20px; gap: 12px; }
+    h1.hero-heading { font-size: clamp(28px, 8vw, 40px); }
+    .hero-right { display: none; }
+    .hero-stats { gap: 16px; }
+    .hero-stat-num { font-size: 24px; }
+    .hero-actions { flex-wrap: wrap; }
+
+    /* Sections */
+    .section { padding: 56px 20px; }
+    .section-header { gap: 12px; margin-bottom: 32px; }
+
+    /* Featured card */
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-body { padding: 28px 24px; }
+    .featured-media { min-height: 240px; }
+    .featured-media img { margin-top: 0; }
+
+    /* Project grid */
+    .proj-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    /* Highlights grid */
+    .hl-grid { grid-template-columns: 1fr; gap: 10px; }
+
+    /* Proto grid */
+    .proto-grid { grid-template-columns: 1fr; }
+    .proto-card-wide { grid-template-columns: 1fr; }
+    .proto-card-wide .proto-frame { height: 240px; border-right: none; border-bottom: 1px solid var(--border); border-radius: 0; }
+
+    /* Claude grid */
+    .claude-grid { grid-template-columns: 1fr; gap: 32px; }
+
+    /* Skills grid */
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Lenovo */
+    .lenovo-showcase { grid-template-columns: 1fr; }
+
+    /* Work grid */
+    .work-grid { grid-template-columns: 1fr !important; }
+    .work-left { border-right: none !important; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+
+    /* Float video: 缩小并固定右下角，不遮挡内容 */
+    #float-video-wrap {
+      width: 90px !important;
+      top: auto !important;
+      bottom: 16px !important;
+      right: 16px !important;
+    }
+
+    /* Footer */
+    footer .section { padding: 40px 20px; }
+  }
 </style>
 </head>
 <body>
